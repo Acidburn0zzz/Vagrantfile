@@ -3,17 +3,15 @@
 ## Get Debian base boxes
 
 ```bash
-vagrant box add debian/contrib-jessie64
+vagrant box add debian/stretch64
 ```
-
-*Note:* You can only add Jessie base box as Wheezy support is now discontinued for YunoHost
 
 ## Build YunoHost boxes
 
 Download the vagrant file to build from debian boxes
 
 ```bash
-wget https://raw.githubusercontent.com/YunoHost/Vagrantfile/master/prebuild/Vagrantfile
+wget https://raw.githubusercontent.com/YunoHost/Vagrantfile/stretch/prebuild/Vagrantfile
 ```
 
 ## Run your homemade boxes
@@ -21,7 +19,7 @@ wget https://raw.githubusercontent.com/YunoHost/Vagrantfile/master/prebuild/Vagr
 Run the box you need by calling `vagrant up DEBIAN_CODENAME-YUNOHOST_VERSION`
 
 ```bash
-vagrant up jessie-stable
+vagrant up stretch-unstable
 ```
 
 - `DEBIAN_CODENAME`: Only `jessie` for now.
@@ -34,7 +32,7 @@ You can now log into your box with `vagrant ssh jessie-stable`
 You can package it to use it more quickly later:
 
 ```bash
-vagrant up jessie-stable
-vagrant package jessie-stable  --output ./my-yunohost-stable.box
-vagrant box add my-yunohost/stable ./my-yunohost-stable.box
+vagrant up stretch-unstable
+vagrant package stretch-unstable  --output ./my-yunohost-unstable.box
+vagrant box add yunohost/stretch-unstable ./my-yunohost-unstable.box
 ```

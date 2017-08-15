@@ -19,13 +19,15 @@ echo -e "yunohost\nyunohost" | sudo passwd root
 export SUDO_FORCE_REMOVE=yes
 
 # Upgrade guest (done in install script)
-# sudo apt-get update
-# sudo apt-get -y --force-yes upgrade
-# sudo apt-get -y --force-yes dist-upgrade
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
 
 # Install YunoHost
-wget https://raw.githubusercontent.com/YunoHost/install_script/master/install_yunohost -q -O /tmp/install_yunohost
-sudo bash /tmp/install_yunohost -a -d $1
+sudo apt-get install git -y
+sudo git clone https://github.com/YunoHost/install_script --branch stretch
+sudo bash -c 'cd install_script && ./install_yunohost -a'
+sudo rm -r /ynh-dev/
 
 # Cleanup
 sudo apt-get clean -y
@@ -67,5 +69,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     unstable.vm.network :private_network, ip: "192.168.33.82"
   end
+
+  # Debian Stretch with YunoHost unstable (nightly) release
+  config.vm.define "stretch-unstable" do |unstable|
+    unstable.vm.box = "debian/stretch64"
+    unstable.vm.provision "shell" do |s|
+      s.inline = $script
+      s.args   = "'unstable'"
+    end
+    unstable.vm.network :private_network, ip: "192.168.33.93"
+  end
+
 
 end
